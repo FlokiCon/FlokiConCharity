@@ -66,7 +66,6 @@ export const Advert = () => {
                         <option disabled value="0"></option>
                             {categList['categories'].map((categ, index) => {
                                 return <option key={index} value={categ.id}>{categ.name}</option>
-                            
                             })}
                         </select>
                     <label for="floatingSelect">Виберіть категорію</label>
