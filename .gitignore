@@ -13,4 +13,7 @@
 /.vs/FlokiConCharity/FileContentIndex/07ad0cfb-52f7-41ba-885d-7cef9cb6a2b8.vsidx
 /.vs/FlokiConCharity/FileContentIndex/6805888c-5df1-4ec0-bf4e-5a53bc3ea78e.vsidx
 /.vs/FlokiConCharity/FileContentIndex
-back/database.db
+
+/.vs/slnx.sqlite
+/back/database.db
+database.db

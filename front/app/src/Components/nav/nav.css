@@ -1,46 +1,88 @@
-nav {
+.custom-navbar {
+    background-color: #ffffff;
+    padding: 10px;
     display: flex;
-    flex-direction: row;
-    width: 100%;
-    background-color: rgba(77, 108, 65, 0.3);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
-nav span {
+.custom-navbar {
+    display: grid;
+    grid-template-columns: auto auto 1fr; /* Three columns, first two are auto width, last one takes the remaining space */
+    align-items: center; /* Align items vertically center */
+    padding: 10px;
+    background-color: #f3f3f3;
+  }
+  
+  .logo-container,
+  .crumbs-container,
+  .title-profile-container {
+    display: flex; /* Use flexbox for aligning items */
+    align-items: center; /* Align items vertically center */
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+  }
+  
+  .crumbs {
+    display: flex; /* Use flexbox for horizontal alignment of crumbs */
+  }
+  
+  .title {
+    font-size: 1.2rem;
+  }
+  
+  .profile img {
+    width: 30px;
+    height: auto;
+    border-radius: 50%;
+    margin-left: 10px;
+  }
+  
+
+.logo-container,
+.crumbs-container,
+.title-profile-container {
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
 .logo {
-    padding: 0.5em;
-    background-color: #4d6c41;
-    color: white;
-    font-size: 1.5rem;
-    border-radius: 0 0 5px 0;
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 20px; /* Відступ між логотипом і наступним контейнером */
+}
+
+.crumbs {
+    display: flex;
+    align-items: center; /* Центрування хлібних крихт */
+    margin-right: 20px; /* Відступ між хлібними крихтами і наступним контейнером */
+}
+
+.crumbs span {
+    margin-right: 10px; /* Відступ між хлібними крихтами */
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.title-profile-container {
+    display: flex;
+    align-items: center;
 }
 
 .title {
-    font-size: 1.3rem;
-    color: black;
-    margin-left: 1.5em;
+    font-size: 20px;
+    margin-right: 20px; /* Відступ між заголовком і профілем */
 }
 
-.userico {
-    display: block;
-    width: 2.2em;
-    margin: 0.5em 0.5em 0.5em 0;
-}
-
-@media (max-width: 512px) {
-    .userico {
-        width: 2.2em;
-    }
-    .title {
-        font-size: 1.2rem;
-    }
-    .logo {
-        font-size: 1.3rem;
-    }
+.profile img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #333; /* Змінити колір контуру профілю */
+    padding: 3px;
 }
