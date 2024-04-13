@@ -5,16 +5,7 @@
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
 }
-
-.custom-navbar {
-    display: grid;
-    grid-template-columns: auto auto 1fr; /* Three columns, first two are auto width, last one takes the remaining space */
-    align-items: center; /* Align items vertically center */
-    padding: 10px;
-    background-color: #f3f3f3;
-  }
   
   .logo-container,
   .crumbs-container,
@@ -58,15 +49,28 @@
 
 .crumbs {
     display: flex;
-    align-items: center; /* Центрування хлібних крихт */
-    margin-right: 20px; /* Відступ між хлібними крихтами і наступним контейнером */
+    align-items: center;
+    justify-content: space-between;
+}
+
+.crumbs a{
+    padding-right: 2em;
+    text-decoration: none;
+    color: #333;
+    transition: color 0.2s;
+}
+
+.crumbs a:hover{
+  color: #888888;
+}
+
+.crumbs a:last-child {
+    margin-right: 0;
 }
 
 .crumbs span {
     margin-right: 10px; /* Відступ між хлібними крихтами */
     padding: 5px;
-    border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .title-profile-container {

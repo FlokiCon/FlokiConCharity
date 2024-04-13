@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 
 import App from './App';
 import Home from './Home';
+import Profile from './Profile';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -20,6 +21,10 @@ import {
       path: "/add_advert",
       element: <App />
     },
+    {
+      path: "/profile",
+      element: <Profile />
+    }
 
   ]);
 
