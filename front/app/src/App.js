@@ -18,7 +18,7 @@ function App() {
 
     return (
         <div className="App">
-            <Navbar></Navbar>
+            <Navbar crumbs={[{path: "/", name: "Home"}]}></Navbar>
             <Advert></Advert>
             <Reg></Reg>
         </div>
