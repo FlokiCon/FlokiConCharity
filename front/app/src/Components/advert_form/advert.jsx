@@ -5,7 +5,7 @@ import { useState } from 'react';
 export const Advert = () => {
     let ml = [];
     for (let i = 0; i < 5; ++i) {
-        ml.push(<input key={i} className="form-check-input" type="radio" name="priority" value={i}></input>)
+        ml.push(<input key={i} className="form-check-input" type="radio" name="priority" value={i} onChange={e => setPriority(e.target.value)}></input>)
     }
 
     let categs = [];
@@ -19,20 +19,30 @@ export const Advert = () => {
     const [priority, setPriority] = useState('');
     const [picture, setPicture] = useState([]);
 
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        let add_advert = fetch('/add_advert', {
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('text', text);
+        formData.append('category_id', category);
+        formData.append('priority', priority);
+        if (picture.length > 0) {
+            // Assuming `picture` is an array of files
+            formData.append('photo', picture[0], picture[0].name);
+        }
+        fetch('/add_advert', {
             method: 'POST',
-            body: {
-                title: title,
-                text: text,
-                category: category,
-                priority: priority,
-                photo: picture
-            }
-        }).then(response => response.json()).then(data => {console.log(data)});
-        
-        console.log(picture);
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
       };
 
     return (
