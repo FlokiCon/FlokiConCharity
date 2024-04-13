@@ -37,7 +37,7 @@ def init_db():
         
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS category (
-            category_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            category_id INTEGER PRIMARY KEY,
             name TEXT UNIQUE
         )
         """)
@@ -50,13 +50,14 @@ def init_db():
             priority INTEGER,
             category_id INTEGER,
             photo BLOB,
-            user_id INTEGER,
+            user_id INTEGER PRIMARY KEY AUTOINCREMENT,
             FOREIGN KEY (category_id) REFERENCES category(category_id),
             FOREIGN KEY (user_id) REFERENCES user(id)
         )
         """)
         
         categories = [
+            ('Без категорії',),
             ('Військове',),
             ('Медицина',),
             ('Харчові товари',),
@@ -157,8 +158,8 @@ def get_adverts():
         page = request.args.get('page', default=1, type=int)
 
         # Розраховуємо індекси для пагінації
-        start_idx = (page - 1) * 10
-        end_idx = start_idx + 10
+        start_idx = (page - 1) * 20
+        end_idx = start_idx + 20
 
         with app.app_context():
             conn = get_db_connection()
@@ -168,7 +169,7 @@ def get_adverts():
                 SELECT advert_id, title, text, priority, photo, user_id, category_id
                 FROM advert
                 LIMIT ? OFFSET ?
-                """, (10, start_idx))
+                """, (20, start_idx))
             adverts = cursor.fetchall()
 
             formatted_adverts = []
@@ -209,6 +210,7 @@ def get_photo(advert_id):
 def get_categories():
     try:
         categories = [
+            {'id': 0, 'name': 'Без категорії'},
             {'id': 1, 'name': 'Військове'},
             {'id': 2, 'name': 'Медицина'},
             {'id': 3, 'name': 'Харчові товари'},
@@ -217,6 +219,30 @@ def get_categories():
         ]
         
         return jsonify({'categories': categories}), 200
+    except Exception as e:
+        return jsonify({'message': f'Помилка: {e}'}), 500
+
+@app.route('/get_user/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    try:
+        with app.app_context():
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            
+            cursor.execute("SELECT id, name, surname, phone, login FROM user WHERE id = ?", (user_id,))
+            user = cursor.fetchone()
+
+            if user:
+                user_info = {
+                    'id': user[0],
+                    'na me': user[1],
+                    'surname': user[2],
+                    'phone': user[3],
+                    'login': user[4]
+                }
+                return jsonify({'user': user_info}), 200
+            else:
+                return jsonify({'message': 'Користувач не знайдений!'}), 404
     except Exception as e:
         return jsonify({'message': f'Помилка: {e}'}), 500
 
