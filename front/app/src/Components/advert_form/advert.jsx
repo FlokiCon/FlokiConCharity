@@ -1,16 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './advert.css';
 import { useState } from 'react';
 
 export const Advert = () => {
-    let ml = [];
+    let priorities = [];
     for (let i = 0; i < 5; ++i) {
-        ml.push(<input key={i} className="form-check-input" type="radio" name="priority" value={i} onChange={e => setPriority(e.target.value)}></input>)
-    }
-
-    let categs = [];
-    for (let i = 0; i < 7; ++i) {
-        categs.push(<option key={i} onChange={e => setCategory(e.target.value)} value={i}>Категорія {i}</option>)
+        priorities.push(<input key={i} className="form-check-input" type="radio" name="priority" value={i} onChange={e => setPriority(e.target.value)}></input>)
     }
 
     const [title, setTitle] = useState('');
@@ -19,7 +14,7 @@ export const Advert = () => {
     const [priority, setPriority] = useState('');
     const [picture, setPicture] = useState([]);
 
-
+    const [categList, setCategList] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,7 +24,6 @@ export const Advert = () => {
         formData.append('category_id', category);
         formData.append('priority', priority);
         if (picture.length > 0) {
-            // Assuming `picture` is an array of files
             formData.append('photo', picture[0], picture[0].name);
         }
         fetch('/add_advert', {
@@ -45,6 +39,21 @@ export const Advert = () => {
         });
       };
 
+      useEffect(() => {
+        fetch('/get_categories', {
+            method: 'GET',
+        }).then(response => response.json()
+            ).then(data => {
+                setCategList(data);
+                console.log();
+        })
+      }, [])
+
+    if (categList.length <= 0 ) {
+        return <div>Loading...</div>
+    }
+
+
     return (
         <div className='advert'>
             <h1>Створити запит</h1>
@@ -55,7 +64,10 @@ export const Advert = () => {
                 <div className="form-floating">
                     <select value={category} onChange={(e) => setCategory(e.target.value)} className="form-select" id="floatingSelect" aria-label="Floating label select example">
                         <option disabled value="0"></option>
-                            {categs}
+                            {categList['categories'].map((categ, index) => {
+                                return <option key={index} value={categ.id}>{categ.name}</option>
+                            
+                            })}
                         </select>
                     <label for="floatingSelect">Виберіть категорію</label>
                 </div>
@@ -64,7 +76,7 @@ export const Advert = () => {
                     <span>На скільки терміновим є запит?</span>
                     <br />
                     <div className='select_categ'>
-                        {ml}
+                        {priorities}
                     </div>
                 </div>
 

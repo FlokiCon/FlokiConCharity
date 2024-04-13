@@ -1,10 +1,11 @@
 import React from 'react';
 import './nav.css'
+
 export const Navbar = ({crumbs}) => {
 
     let items = [];
     for (let i = 0; i < crumbs.length; ++i) {
-        items.push(<span className={crumbs[i].pah}>{crumbs[i].name}</span>)
+        items.push(<span key={i} className={crumbs[i].pah}>{crumbs[i].name}</span>)
     }
 
     return (
