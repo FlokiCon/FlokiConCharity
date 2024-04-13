@@ -1,6 +1,4 @@
 import { Navbar } from './Components/nav/navbar';
-import { Advert } from './Components/advert_form/advert';
-import { Reg } from './Components/registation_form/register';
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -18,9 +16,7 @@ function App() {
 
     return (
         <div className="App">
-            <Navbar></Navbar>
-            <Advert></Advert>
-            <Reg></Reg>
+            <Navbar crumbs={[{path: "/", name: "Home"}]}></Navbar>
         </div>
     );
 }
