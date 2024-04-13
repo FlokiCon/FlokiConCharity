@@ -15,5 +15,5 @@
 /.vs/FlokiConCharity/FileContentIndex
 
 /.vs/slnx.sqlite
-/back/database.db
+back/database.db
 database.db
