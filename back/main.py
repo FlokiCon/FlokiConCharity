@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from crypt import methods
+#from crypt import methods
 from flask import Flask, jsonify, request, g, send_file, session, redirect, url_for
 import os
 import sqlite3
@@ -8,6 +8,8 @@ import bcrypt
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecretkey'
+app.config["SESSION_COOKIE_SAMESITE"] = "None"
+app.config["SESSION_COOKIE_SECURE"] = True
 
 def get_db_connection():
     if 'db_connection' not in g:
@@ -72,6 +74,8 @@ def init_db():
 
 @app.route('/add_advert', methods=['POST'])
 def add_advert():
+    session['user_id'] = '1'
+    session['login'] = 'q1'
     try:
         title = request.form.get('title')
         text = request.form.get('text')
@@ -179,6 +183,14 @@ def register_user():
             return jsonify({'message': "Not enough fields!"}), 400
     else:
         return jsonify({'message': "Doesn't support!"}), 405
+
+@app.route('/get_current_user_id', methods=['GET'])
+def get_current_user_id():
+    if 'user_id' in session:
+        return jsonify({'user_id': session['user_id']}), 200
+    else:
+        return jsonify({'message': 'No user logged in!'}), 401
+
 
 @app.route('/check_session', methods=['GET'])
 def check_session():
@@ -298,6 +310,11 @@ def get_categories():
 
 @app.route('/get_user/<int:user_id>', methods=['GET'])
 def get_user(user_id):
+    #with sqlite3.connect('database.db') as connection: 
+     #   connection.cursor().execute("""
+      #                  INSERT INTO user (name, surname, phone, login, password_hash) VALUES (?, ?, ?, ?, ?)
+       #             """, ('ivan', 'protsai', 'phone1', 'login1', 'hashed_password'))
+        #connection.commit()
     try:
         with app.app_context():
             conn = get_db_connection()

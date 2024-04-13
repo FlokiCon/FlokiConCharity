@@ -1,5 +1,6 @@
 import { Navbar } from './Components/nav/navbar';
 import { useState, useEffect } from 'react';
+import { UserProfile } from './Components/user_profile/profile'
 
 function Profile() {
     const crumbs = [
@@ -10,6 +11,7 @@ function Profile() {
     return (
         <div className="App">
             <Navbar crumbs={crumbs}></Navbar>
+            <UserProfile></UserProfile>
         </div>
     );
 }
