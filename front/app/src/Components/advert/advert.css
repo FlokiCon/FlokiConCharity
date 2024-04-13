@@ -1,17 +1,44 @@
 .advert {
-    width: 500px;
+    width: 600px;
     padding: 1.5em;
     border: 1px solid #ccc;
-    margin-left: 5em;
+    margin: 0 auto;
     margin-top: 5em;
+    margin-bottom: 2em;
 }
 
 .advert h1 {
     font-size: 1.5em;
+    margin-bottom: 1em;
 }
 
 .priority {
-    margin-bottom: 1em;
+    margin-bottom: 0.4em;
+    margin-top: 1.6em;
+}
+
+.priority span {
+    font-size: 1.1em;
+}
+
+form .title {
+    margin-bottom: 1.2em;
+    font-size: 1.3em;
+    width: 100%;
+}
+
+form input {
+    font-size: 1em !important;
+}
+
+form textarea {
+    font-size: 1em !important;
+    margin-bottom: 1.2em;
+    min-height: 150px !important;
+}
+
+.submit {
+    margin-top: 1.2em;
 }
 
 .select_categ {
@@ -27,33 +54,4 @@ form {
     display: flex;
     flex-direction: column;
     width: 100%;
-}
-
-form input {
-    width: 100%;
-    display: block;
-    box-sizing: border-box;
-    border: none;
-}
-
-form input[type="text"] {
-    height: 2em;
-    font-size: 1.1em;
-}
-
-textarea {
-    font-size: 1.1em;
-    margin-bottom: 1em;
-}
-
-form textarea {
-    width: 100%;
-    display: block;
-    box-sizing: border-box;
-}
-
-form select {
-    width: 100%;
-    display: block;
-    box-sizing: border-box;
 }
