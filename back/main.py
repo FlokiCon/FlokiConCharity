@@ -231,6 +231,38 @@ def get_adverts():
     except Exception as e:
         return jsonify({'message': f'Помилка: {e}'}), 500
 
+
+@app.route('/get_user_adverts/<int:user_id>', methods=['GET'])
+def get_user_adverts(user_id):
+    try:
+        with app.app_context():
+            conn = get_db_connection()
+            cursor = conn.cursor()
+
+            cursor.execute("""
+                SELECT advert_id, title, text, priority, photo, user_id, category_id
+                FROM advert
+                WHERE user_id = ?
+                """, (user_id,))
+            adverts = cursor.fetchall()
+
+            formatted_adverts = []
+            for advert in adverts:
+                formatted_advert = {
+                    'advert_id': advert[0],
+                    'title': advert[1],
+                    'text': advert[2],
+                    'priority': advert[3],
+                    'photo_path': bool(advert[4]),
+                    'user_id': advert[5],
+                    'category_id': advert[6]
+                }
+                formatted_adverts.append(formatted_advert)
+
+            return jsonify({'adverts': formatted_adverts}), 200
+    except Exception as e:
+        return jsonify({'message': f'Помилка: {e}'}), 500
+
 @app.route('/get_photo/<int:advert_id>', methods=['GET'])
 def get_photo(advert_id):
     try:
