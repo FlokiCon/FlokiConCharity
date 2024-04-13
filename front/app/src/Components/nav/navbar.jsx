@@ -11,14 +11,14 @@ export const Navbar = ({crumbs}) => {
     return (
         <nav className="custom-navbar">
             <div className="divv">
-                <span className='logo'>FCC</span>
+                <span className='logo'><a href='/'>FCC</a></span>
             </div>
             <div className="crumbs">
                 <div className="crumbs">{items}</div>
                 <div className="title-profile-container"></div>
             </div>
             <div className="profile">
-                <span className='title'>FlokiCon Charity</span>
+                <span className='logout'><a href="#" onClick={() => {fetch('/logout', {method: 'GET'})}}>LogOut</a></span>
                 <a href="/profile"><span className='profile'><img src="/icons/user.png" alt="user icon" className="userico"></img></span></a>
             </div>
         </nav>

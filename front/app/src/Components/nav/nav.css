@@ -41,10 +41,20 @@
     align-items: center;
 }
 
-.logo {
+.logo a {
     font-size: 24px;
     font-weight: bold;
     margin-right: 20px; /* Відступ між логотипом і наступним контейнером */
+    color: #333;
+    text-decoration: none;
+}
+
+.logout a{
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s;
+    font-size: 1.1em;
+    font-weight: bold;
 }
 
 .crumbs {
@@ -54,22 +64,20 @@
 }
 
 .crumbs a{
-    padding-right: 2em;
     text-decoration: none;
     color: #333;
     transition: color 0.2s;
+}
+
+.crumbs a:not(:last-child){
+  padding-right: 2em;
 }
 
 .crumbs a:hover{
   color: #888888;
 }
 
-.crumbs a:last-child {
-    margin-right: 0;
-}
-
 .crumbs span {
-    margin-right: 10px; /* Відступ між хлібними крихтами */
     padding: 5px;
 }
 

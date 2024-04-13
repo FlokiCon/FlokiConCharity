@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import App from './App';
-import Home from './Home';
+import AdvertsView from './AdvertsView';
 import Profile from './Profile';
 
 import reportWebVitals from './reportWebVitals';
@@ -14,8 +14,12 @@ import {
 
   const router = createBrowserRouter([
     {
-        path: "/",
-        element: <Home />
+      path: "/",
+      element: <AdvertsView />
+    },
+    {
+        path: "/adverts",
+        element: <AdvertsView />
     },
     {
       path: "/add_advert",

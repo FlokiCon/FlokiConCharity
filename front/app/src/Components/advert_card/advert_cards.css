@@ -1,0 +1,13 @@
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: 0 auto;
+    justify-content: space-around;
+    margin-top: 1.2em;
+}
+
+.card {
+    width: calc(80vw * (1/4)) !important;
+    margin: 1em;
+}

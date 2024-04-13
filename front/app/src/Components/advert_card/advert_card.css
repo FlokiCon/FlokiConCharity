@@ -1,3 +1,7 @@
 .card {
     width: 18em !important;
 }
+
+.card-link {
+    color: #307a40;
+}

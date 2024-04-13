@@ -7,8 +7,8 @@ function Home() {
     const endpoint = '/get';
 
     const crumbs = [
-        {path: "/", name: "Головна"},
         {path: "/add_advert", name: "Додати запит"},
+        {path: "/adverts", name: "Хочу допомогти"},
     ]
 
     return (

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Card } from './advert_card';
+import './advert_cards.css';
 
 export const Cards = ({page}) => {
 
