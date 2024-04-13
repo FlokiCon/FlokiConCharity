@@ -198,6 +198,21 @@ def get_photo(advert_id):
     except Exception as e:
         return jsonify({'message': f'Помилка: {e}'}), 500
 
+@app.route('/get_categories', methods=['GET'])
+def get_categories():
+    try:
+        categories = [
+            {'id': 1, 'name': 'Військове'},
+            {'id': 2, 'name': 'Медицина'},
+            {'id': 3, 'name': 'Харчові товари'},
+            {'id': 4, 'name': 'Для дітей'},
+            {'id': 5, 'name': 'Послуги'}
+        ]
+        
+        return jsonify({'categories': categories}), 200
+    except Exception as e:
+        return jsonify({'message': f'Помилка: {e}'}), 500
+
 if __name__ == "__main__":
     app.config['UPLOAD_FOLDER'] = 'uploads'
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
