@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
+from crypt import methods
 from flask import Flask, jsonify, request, g, send_file, session, redirect, url_for
 import os
 import sqlite3
-from werkzeug.utils import secure_filename
 import io
 import bcrypt
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'mysecretkey'
 
 def get_db_connection():
     if 'db_connection' not in g:
@@ -69,12 +70,6 @@ def init_db():
         conn.commit()
         conn.close()
 
-
-def file_to_blob(file_path):
-    with open(file_path, 'rb') as file:
-        blob_data = file.read()
-    return blob_data
-
 @app.route('/add_advert', methods=['POST'])
 def add_advert():
     try:
@@ -105,10 +100,6 @@ def add_advert():
     except Exception as e:
         return jsonify({'message': f'Помилка: {e}'}), 500
 
-
-DATABASE = 'database.db'
-DB = sqlite3.connect(DATABASE)
-
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == "POST":
@@ -121,7 +112,7 @@ def login():
                 if not login or not password:
                     return jsonify({'message': 'no login or password!'}), 400
 
-                with sqlite3.connect(DATABASE) as connection:
+                with sqlite3.connect('database.db') as connection:
                     cursor = connection.cursor()
                     cursor.execute('SELECT * FROM user WHERE login = (?)', (login, ))
                     user = cursor.fetchone()
@@ -131,7 +122,9 @@ def login():
 
                     stored_password_hash = user[5]
 
-                    if bcrypt.checkpw(password.encode('utf-8'), stored_password_hash.encode('utf-8')):
+                    if bcrypt.checkpw(password.encode('utf-8'), stored_password_hash):
+                        session['user_id'] = user[0]
+                        session['login'] = user[4]
                         return jsonify({'message': 'Success!'}), 200
                     else:
                         return jsonify({'message': 'Bad password!'}), 401
@@ -142,7 +135,7 @@ def login():
             return jsonify({'message': f'Error: {e}'}), 500
     else:
         return jsonify({'message': "Doesn't support!"}), 405
-        
+
 @app.route("/register", methods=["POST", 'GET'])
 def register_user():
     if request.method == "POST":
@@ -159,7 +152,7 @@ def register_user():
                 return jsonify({'message': "Passwords doesn't match!"}), 400
 
             try:
-                with sqlite3.connect(DATABASE) as connection:
+                with sqlite3.connect('database.db') as connection:
                     cursor = connection.cursor()
                     cursor.execute('SELECT * FROM user WHERE login = ?', (login,))
                     account = cursor.fetchone()
@@ -173,35 +166,52 @@ def register_user():
                     """, (name, surname, phone, login, hashed_password))
                     connection.commit()
 
-                    #session['login'] = login
-                    #session['name'] = name
-                    #session['surname'] = surname
-                    #session['phone'] = phone
+                    cursor.execute('SELECT id FROM user WHERE login = ?', (login,))
+                    user_id = cursor.fetchone()[0]
+                    
+                    session['user_id'] = user_id
+                    session['login'] = login
 
-                    return jsonify({'message': "Success!"}), 201
+                    return jsonify({'message': "Success!", 'user_id': user_id}), 201
             except Exception as e:
-                return jsonify({'main.py::message': f'Error: {e}'}), 500
+                return jsonify({'message': f'Error: {e}'}), 500
         else:
-            return jsonify({'message': "Not enought fields!"}), 400
+            return jsonify({'message': "Not enough fields!"}), 400
     else:
         return jsonify({'message': "Doesn't support!"}), 405
 
-@app.route('/logout')
+@app.route('/check_session', methods=['GET'])
+def check_session():
+    if 'user_id' in session and 'login' in session:
+        return jsonify({'user_id': session['user_id'], 'login': session['login']}), 200
+    else:
+        return jsonify({}), 404
+    
+@app.route('/logout', methods=['GET'])
 def logout():
-    session.clear()
-    return redirect(url_for('login'))
-
+    if 'user_id' in session and 'login' in session:
+        session.clear()
+        return jsonify({'message': 'Session closed!'}), 200
+    else:
+        return jsonify({'message': 'No active session!'}), 401
+    
 @app.route('/get_adverts', methods=['GET'])
 def get_adverts():
     try:
+        page = request.args.get('page', default=1, type=int)
+
+        start_idx = (page - 1) * 20
+        end_idx = start_idx + 20
+
         with app.app_context():
             conn = get_db_connection()
             cursor = conn.cursor()
-            
+
             cursor.execute("""
-                SELECT a.advert_id, a.title, a.text, a.priority, a.photo, a.user_id, a.category_id
-                FROM advert a
-            """)
+                SELECT advert_id, title, text, priority, photo, user_id, category_id
+                FROM advert
+                LIMIT ? OFFSET ?
+                """, (20, start_idx))
             adverts = cursor.fetchall()
 
             formatted_adverts = []
@@ -213,14 +223,13 @@ def get_adverts():
                     'priority': advert[3],
                     'photo_path': bool(advert[4]),
                     'user_id': advert[5],
-                    'category_id': advert[6] if advert[6] is not None else None
+                    'category_id': advert[6]
                 }
                 formatted_adverts.append(formatted_advert)
 
             return jsonify({'adverts': formatted_adverts}), 200
     except Exception as e:
         return jsonify({'message': f'Помилка: {e}'}), 500
-
 
 @app.route('/get_photo/<int:advert_id>', methods=['GET'])
 def get_photo(advert_id):
@@ -280,10 +289,6 @@ def get_user(user_id):
         return jsonify({'message': f'Помилка: {e}'}), 500
 
 if __name__ == "__main__":
-    app.config['UPLOAD_FOLDER'] = 'uploads'
-    if not os.path.exists(app.config['UPLOAD_FOLDER']):
-        os.makedirs(app.config['UPLOAD_FOLDER'])
-    
     init_db()
     port = int(os.environ.get('PORT', 5000))
     app.run(debug=True, host='0.0.0.0', port=port)
