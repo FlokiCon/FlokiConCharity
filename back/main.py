@@ -108,7 +108,13 @@ def add_advert():
 
 DATABASE = 'database.db'
 
-@app.route("/register", methods=["POST"])
+@app.route('/login', methods=['POST'])
+def login():
+     with sqlite3.connect(DATABASE) as connection:
+        cursor = connection.cursor()
+        cursor.execute
+        
+@app.route("/register", methods=["POST", 'GET'])
 def register_user():
     if request.method == "POST":
         if('name' in request.form 
@@ -123,22 +129,25 @@ def register_user():
                 password = request.form['password']
                 password_config = request.form['password_config']
                 phone = request.form['phone']
-
+                
                 if(password != password_config):
                     return "passwords doesn't match"
                 
-                else:
+                with sqlite3.connect(DATABASE) as connection:
+                    cursor = connection.cursor()
+                    cursor.execute('SELECT * FROM accounts WHERE login = % s', (login, ))
+                    account = cursor.fetchone()
                     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-
-                    with sqlite3.connect(DATABASE) as connection:
-                        cursor = connection.cursor()
+                    if account:
+                        return "account already exists"
+                    elif (name and surname and login and password and phone):
                         cursor.execute("""
                         INSERT INTO user (name, surname, phone, login, password) VALUES (?, ?, ?, ?, ?)
                         """, (name, surname, phone, login, hashed_password))
-
-                    return "Success"
-        else:
-             return "not enough data to registrate user"
+                        DB.commit()
+                        return "Success"
+                    else:
+                        return "not enought records"
 
 
 @app.route('/get_adverts', methods=['GET'])
