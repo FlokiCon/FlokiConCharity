@@ -2,7 +2,7 @@ nav {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 100vw;
+    width: 100%;
     background-color: rgba(77, 108, 65, 0.3);
     backdrop-filter: blur(10px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
@@ -29,7 +29,7 @@ nav span {
 
 .userico {
     display: block;
-    width: 2.7em;
+    width: 2.2em;
     margin: 0.5em 0.5em 0.5em 0;
 }
 
