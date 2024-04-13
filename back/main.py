@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, jsonify, request, g, send_file
+from flask import Flask, jsonify, request, g, send_file, session
 import os
 import sqlite3
 from werkzeug.utils import secure_filename
@@ -26,14 +26,13 @@ def init_db():
 
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS user (
-        id INTEGER PRIMARY KEY,
-        name TEXT,
-        surname TEXT,
-        phone TEXT UNIQUE,
-        login TEXT UNIQUE,
-        password_hash TEXT
-        )
-        """)
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            surname TEXT,
+            phone TEXT UNIQUE,
+            login TEXT UNIQUE,
+            password_hash TEXT
+        )""")
         
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS category (
@@ -135,7 +134,8 @@ def login():
                     return jsonify({'message': 'Bad password!'}), 401
         except Exception as e:
             return jsonify({'message': f'Error: {e}'}), 500
-
+    else:
+        return jsonify({'message': "Doesn't support!"}), 405
         
 @app.route("/register", methods=["POST", 'GET'])
 def register_user():
@@ -169,7 +169,7 @@ def register_user():
 
                     return jsonify({'message': "Success!"}), 201
             except Exception as e:
-                return jsonify({'message': f'Error: {e}'}), 500
+                return jsonify({'main.py::message': f'Error: {e}'}), 500
         else:
             return jsonify({'message': "Not enought fields!"}), 400
     else:
@@ -199,7 +199,7 @@ def get_adverts():
                     'priority': advert[3],
                     'photo_path': bool(advert[4]),
                     'user_id': advert[5],
-                    'category_id': advert[6] if advert[6] is not None else None  # Перевірка на None
+                    'category_id': advert[6] if advert[6] is not None else None
                 }
                 formatted_adverts.append(formatted_advert)
 
