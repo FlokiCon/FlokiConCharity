@@ -107,6 +107,7 @@ def add_advert():
 
 
 DATABASE = 'database.db'
+DB = sqlite3.connect(DATABASE)
 
 @app.route('/login', methods=['POST'])
 def login():
