@@ -1,6 +1,7 @@
 import { Navbar } from './Components/nav/navbar';
 import { useState, useEffect } from 'react';
 import { Cards } from './Components/advert_card/advert_cards';
+import { Footer } from './Components/footer/footer';
 
 function App() {
     const [initialState, setInitialState] = useState({'result': []});
@@ -19,6 +20,7 @@ function App() {
         <div className="App">
             <Navbar crumbs={[{path: "/", name: "Home"}]}></Navbar>
             <Cards page={1}></Cards>
+            <Footer></Footer>
         </div>
     );
 }
