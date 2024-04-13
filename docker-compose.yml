@@ -1,0 +1,20 @@
+services:
+  api:
+    build: ./back
+    image: flask_docker
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./back:/app
+  client:
+    build: ./front/app
+    image: react_docker
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./front/app/src:/app/src
+      - ./front/app/public:/app/public
+    links:
+      - api
+    depends_on:
+      - api

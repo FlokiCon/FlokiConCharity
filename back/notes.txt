@@ -1,0 +1,2 @@
+sudo docker image build -t flask_docker .
+sudo docker run -p 5000:5000 --rm --name fc flask_docker

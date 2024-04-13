@@ -1,0 +1,59 @@
+.advert {
+    width: 500px;
+    padding: 1.5em;
+    border: 1px solid #ccc;
+    margin-left: 5em;
+    margin-top: 5em;
+}
+
+.advert h1 {
+    font-size: 1.5em;
+}
+
+.priority {
+    margin-bottom: 1em;
+}
+
+.select_categ {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 0.3em;
+    margin-bottom: 1em;
+    width: 40%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+form input {
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    border: none;
+}
+
+form input[type="text"] {
+    height: 2em;
+    font-size: 1.1em;
+}
+
+textarea {
+    font-size: 1.1em;
+    margin-bottom: 1em;
+}
+
+form textarea {
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+}
+
+form select {
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+}

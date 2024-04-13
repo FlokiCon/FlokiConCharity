@@ -1,0 +1,46 @@
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100vw;
+    background-color: rgba(77, 108, 65, 0.3);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+nav span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    padding: 0.5em;
+    background-color: #4d6c41;
+    color: white;
+    font-size: 1.5rem;
+    border-radius: 0 0 5px 0;
+}
+
+.title {
+    font-size: 1.3rem;
+    color: black;
+}
+
+.userico {
+    display: block;
+    width: 2.7em;
+    margin: 0.5em 0.5em 0.5em 0;
+}
+
+@media (max-width: 512px) {
+    .userico {
+        width: 2.2em;
+    }
+    .title {
+        font-size: 1.2rem;
+    }
+    .logo {
+        font-size: 1.3rem;
+    }
+}
