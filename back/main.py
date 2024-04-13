@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, jsonify, request, g, send_file, session
+from flask import Flask, jsonify, request, g, send_file, session, redirect, url_for
 import os
 import sqlite3
 from werkzeug.utils import secure_filename
@@ -112,26 +112,31 @@ DB = sqlite3.connect(DATABASE)
 def login():
     if request.method == "POST":
         try:
-            login = request.form.get('login')
-            password = request.form.get('password')
+            required_fields = ['login', 'password']
+            if all(field in request.form for field in required_fields):
+                login = request.form['login']
+                password = request.form['password']
 
-            if not login or not password:
-                return jsonify({'message': 'no login or password!'}), 400
+                if not login or not password:
+                    return jsonify({'message': 'no login or password!'}), 400
 
-            with sqlite3.connect(DATABASE) as connection:
-                cursor = connection.cursor()
-                cursor.execute('SELECT * FROM user WHERE login = ?', (login,))
-                user = cursor.fetchone()
+                with sqlite3.connect(DATABASE) as connection:
+                    cursor = connection.cursor()
+                    cursor.execute('SELECT * FROM user WHERE login = (?)', (login, ))
+                    user = cursor.fetchone()
 
-                if not user:
-                    return jsonify({'message': 'User with this login not found!'}), 404
+                    if not user:
+                        return jsonify({'message': 'User with this login not found!'}), 404
 
-                stored_password_hash = user[5]
+                    stored_password_hash = user[5]
 
-                if bcrypt.checkpw(password.encode('utf-8'), stored_password_hash.encode('utf-8')):
-                    return jsonify({'message': 'Success!'}), 200
-                else:
-                    return jsonify({'message': 'Bad password!'}), 401
+                    if bcrypt.checkpw(password.encode('utf-8'), stored_password_hash.encode('utf-8')):
+                        return jsonify({'message': 'Success!'}), 200
+                    else:
+                        return jsonify({'message': 'Bad password!'}), 401
+            else:
+                return jsonify({'message': "Not enought fields!"}), 400
+                
         except Exception as e:
             return jsonify({'message': f'Error: {e}'}), 500
     else:
@@ -167,6 +172,11 @@ def register_user():
                     """, (name, surname, phone, login, hashed_password))
                     connection.commit()
 
+                    #session['login'] = login
+                    #session['name'] = name
+                    #session['surname'] = surname
+                    #session['phone'] = phone
+
                     return jsonify({'message': "Success!"}), 201
             except Exception as e:
                 return jsonify({'main.py::message': f'Error: {e}'}), 500
@@ -175,7 +185,10 @@ def register_user():
     else:
         return jsonify({'message': "Doesn't support!"}), 405
 
-
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
 
 @app.route('/get_adverts', methods=['GET'])
 def get_adverts():
