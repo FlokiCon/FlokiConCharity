@@ -109,46 +109,72 @@ def add_advert():
 DATABASE = 'database.db'
 DB = sqlite3.connect(DATABASE)
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
-     with sqlite3.connect(DATABASE) as connection:
-        cursor = connection.cursor()
-        cursor.execute
+    if request.method == "POST":
+        try:
+            login = request.form.get('login')
+            password = request.form.get('password')
+
+            if not login or not password:
+                return jsonify({'message': 'no login or password!'}), 400
+
+            with sqlite3.connect(DATABASE) as connection:
+                cursor = connection.cursor()
+                cursor.execute('SELECT * FROM user WHERE login = ?', (login,))
+                user = cursor.fetchone()
+
+                if not user:
+                    return jsonify({'message': 'User with this login not found!'}), 404
+
+                stored_password_hash = user[5]
+
+                if bcrypt.checkpw(password.encode('utf-8'), stored_password_hash.encode('utf-8')):
+                    return jsonify({'message': 'Success!'}), 200
+                else:
+                    return jsonify({'message': 'Bad password!'}), 401
+        except Exception as e:
+            return jsonify({'message': f'Error: {e}'}), 500
+
         
 @app.route("/register", methods=["POST", 'GET'])
 def register_user():
     if request.method == "POST":
-        if('name' in request.form 
-           and 'suraname' in request.form
-           and 'login' in request.form
-           and 'password' in request.form
-           and 'password_config' in request.form
-           and 'phone' in request.form):
-                name = request.form['name']
-                surname = request.form['surname']
-                login = request.form['login']
-                password = request.form['password']
-                password_config = request.form['password_config']
-                phone = request.form['phone']
-                
-                if(password != password_config):
-                    return "passwords doesn't match"
-                
+        required_fields = ['name', 'surname', 'login', 'password', 'password_config', 'phone']
+        if all(field in request.form for field in required_fields):
+            name = request.form['name']
+            surname = request.form['surname']
+            login = request.form['login']
+            password = request.form['password']
+            password_config = request.form['password_config']
+            phone = request.form['phone']
+
+            if password != password_config:
+                return jsonify({'message': "Passwords doesn't match!"}), 400
+
+            try:
                 with sqlite3.connect(DATABASE) as connection:
                     cursor = connection.cursor()
-                    cursor.execute('SELECT * FROM accounts WHERE login = % s', (login, ))
+                    cursor.execute('SELECT * FROM user WHERE login = ?', (login,))
                     account = cursor.fetchone()
-                    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
                     if account:
-                        return "account already exists"
-                    elif (name and surname and login and password and phone):
-                        cursor.execute("""
-                        INSERT INTO user (name, surname, phone, login, password) VALUES (?, ?, ?, ?, ?)
-                        """, (name, surname, phone, login, hashed_password))
-                        DB.commit()
-                        return "Success"
-                    else:
-                        return "not enought records"
+                        return jsonify({'message': "User already exists!"}), 409
+
+                    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+                    cursor.execute("""
+                        INSERT INTO user (name, surname, phone, login, password_hash) VALUES (?, ?, ?, ?, ?)
+                    """, (name, surname, phone, login, hashed_password))
+                    connection.commit()
+
+                    return jsonify({'message': "Success!"}), 201
+            except Exception as e:
+                return jsonify({'message': f'Error: {e}'}), 500
+        else:
+            return jsonify({'message': "Not enought fields!"}), 400
+    else:
+        return jsonify({'message': "Doesn't support!"}), 405
+
 
 
 @app.route('/get_adverts', methods=['GET'])
