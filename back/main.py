@@ -56,6 +56,7 @@ def init_db():
         """)
         
         categories = [
+            ('Без категорії',),
             ('Військове',),
             ('Медицина',),
             ('Харчові товари',),
@@ -229,6 +230,7 @@ def get_photo(advert_id):
 def get_categories():
     try:
         categories = [
+            {'id': 0, 'name': 'Без категорії'},
             {'id': 1, 'name': 'Військове'},
             {'id': 2, 'name': 'Медицина'},
             {'id': 3, 'name': 'Харчові товари'},
@@ -237,6 +239,30 @@ def get_categories():
         ]
         
         return jsonify({'categories': categories}), 200
+    except Exception as e:
+        return jsonify({'message': f'Помилка: {e}'}), 500
+
+@app.route('/get_user/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    try:
+        with app.app_context():
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            
+            cursor.execute("SELECT id, name, surname, phone, login FROM user WHERE id = ?", (user_id,))
+            user = cursor.fetchone()
+
+            if user:
+                user_info = {
+                    'id': user[0],
+                    'name': user[1],
+                    'surname': user[2],
+                    'phone': user[3],
+                    'login': user[4]
+                }
+                return jsonify({'user': user_info}), 200
+            else:
+                return jsonify({'message': 'Користувач не знайдений!'}), 404
     except Exception as e:
         return jsonify({'message': f'Помилка: {e}'}), 500
 
