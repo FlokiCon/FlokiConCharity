@@ -3,8 +3,12 @@ import './register.css';
 
 export const Register = () => {
     const [formData, setFormData] = useState({
-        login: '',
-        password: ''
+        username: '',
+        surname: '',
+        password: '',
+        confirm_password: '',
+        phone: '',
+        gmail: ''
     });
 
     const handleChange = (e) => {
@@ -19,6 +23,15 @@ export const Register = () => {
         e.preventDefault();
         console.log(formData);
         
+        if (formData.password !== formData.confirm_password) {
+            alert('Passwords do not match');
+            return;
+        }
+        else if (formData.password.length < 8) {
+            alert('Password must be at least 8 characters long');
+            return;
+        }
+
         fetch('/login', {
             method: 'POST',
             headers: {
@@ -36,25 +49,25 @@ export const Register = () => {
     };
 
     return (
-        <form className='reg_form'>
+        <form className='reg_form' onSubmit={handleSubmit}>
             <h2>Register</h2>
             <div class="input-group">
-                <input placeholder='username' type="text" id="username" name="username" required></input>
+                <input value={formData.username} onChange={handleChange} placeholder='username' type="text" id="username" name="username" required></input>
             </div>
             <div class="input-group">
-                <input placeholder='surname' type="text" id="surname" name="surname" required></input>
+                <input value={formData.surname} onChange={handleChange} placeholder='surname' type="text" id="surname" name="surname" required></input>
             </div>
             <div class="input-group">
-                <input placeholder='password' type="password" id="password" name="password" required></input>
+                <input value={formData.password} onChange={handleChange} placeholder='password' type="password" id="password" name="password" required></input>
             </div>
             <div class="input-group">
-                <input placeholder="confirm password" type="password" id="confirm_password" name="confirm_password" required></input>
+                <input value={formData.confirm_password} onChange={handleChange} placeholder="confirm password" type="password" id="confirm_password" name="confirm_password" required></input>
             </div>
             <div class="input-group">
-                <input placeholder="phone number" type="tel" id="phone" name="phone" required></input>
+                <input value={formData.phone} onChange={handleChange} placeholder="phone number" type="tel" id="phone" name="phone" required></input>
             </div>
             <div class="input-group">
-                <input placeholder='email'  type="email" id="gmail" name="gmail" required></input>
+                <input value={formData.gmail} onChange={handleChange} placeholder='email' type="email" id="gmail" name="gmail" required></input>
             </div>
             <button type="submit" className='btn btn-secondary'>Submit</button>
         </form>
