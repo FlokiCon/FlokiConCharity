@@ -5,14 +5,12 @@ import { useState, useEffect } from 'react';
 
 function App() {
     const crumbs = [
-        {path: "/", name: "Головна"},
         {path: "/add_advert", name: "Додати запит"},
     ]
 
     return (
         <div className="App">
             <Navbar crumbs={crumbs}></Navbar>
-            <Advert></Advert>
         </div>
     );
 }

@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 
 function Profile() {
     const crumbs = [
-        {path: "/", name: "Головна"},
         {path: "/add_advert", name: "Додати запит"},
     ]
 
