@@ -57,26 +57,26 @@ export const Register = () => {
     }
     return (
         <form className='reg_form' onSubmit={handleSubmit}>
-            <h2>Register</h2>
+            <h2>Зареєструватись</h2>
             <div className="input-group">
-                <input value={formData.name} onChange={handleChange} placeholder='name' type="text" id="username" name="name" required></input>
+                <input value={formData.name} onChange={handleChange} placeholder='імʼя' type="text" id="username" name="name" required></input>
             </div>
             <div className="input-group">
-                <input value={formData.surname} onChange={handleChange} placeholder='surname' type="text" id="surname" name="surname" required></input>
+                <input value={formData.surname} onChange={handleChange} placeholder='прізвще' type="text" id="surname" name="surname" required></input>
             </div>
             <div className="input-group">
-                <input value={formData.login} onChange={handleChange} placeholder='login' type="text" id="login" name="login" required></input>
+                <input value={formData.login} onChange={handleChange} placeholder='логін' type="text" id="login" name="login" required></input>
             </div>
             <div className="input-group">
-                <input value={formData.password} onChange={handleChange} placeholder='password' type="password" id="password" name="password" required></input>
+                <input value={formData.password} onChange={handleChange} placeholder='пароль' type="password" id="password" name="password" required></input>
             </div>
             <div className="input-group">
-                <input value={formData.password_config} onChange={handleChange} placeholder="confirm password" type="password" id="confirm_password" name="password_config" required></input>
+                <input value={formData.password_config} onChange={handleChange} placeholder="підтвердження паролю" type="password" id="confirm_password" name="password_config" required></input>
             </div>
             <div className="input-group">
-                <input value={formData.phone} onChange={handleChange} placeholder="phone number" type="tel" id="phone" name="phone" required></input>
+                <input value={formData.phone} onChange={handleChange} placeholder="номер телефону" type="tel" id="phone" name="phone" required></input>
             </div>
-            <button type="submit" className='btn btn-secondary'>Submit</button>
+            <button type="submit" className='btn btn-secondary'>Підтвердити</button>
         </form>
     );
 };

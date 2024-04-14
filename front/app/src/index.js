@@ -10,6 +10,7 @@ import Page from './Page';
 import Register from './Register';
 
 import {Footer} from './Components/footer/footer';
+import {ReactSession} from 'react-client-session';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -18,14 +19,12 @@ import {
     RouterProvider,
   } from "react-router-dom";
 
+  ReactSession.setStoreType("localStorage");
+
   const router = createBrowserRouter([
     {
       path: "/",
       element: <About />
-    },
-    {
-      path: "/register",
-      element: <Register />
     },
     {
       path: '/page',
@@ -44,10 +43,13 @@ import {
       element: <Profile />
     },
     {
+      path: "/register",
+      element: <Register />
+    },
+    {
       path: "/login",
       element: <Login />
     }
-
   ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

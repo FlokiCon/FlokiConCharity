@@ -4,6 +4,8 @@ import { ReactSession }  from 'react-client-session';
 
 function App() {
     const crumbs = [
+        {path: "/login", name: "Ввійти"},
+        {path: "/register", name: "Реєстрація"},
         {path: "/advert_list", name: "Стати волонтером"},
         {path: "/add_advert", name: "Додати запит"},
     ]

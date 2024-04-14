@@ -4,10 +4,11 @@ import { Register } from './Components/register/register';
 
 function App() {
     const crumbs = [
+        {path: "/login", name: "Ввійти"},
+        {path: "/register", name: "Реєстрація"},
         {path: "/advert_list", name: "Стати волонтером"},
         {path: "/add_advert", name: "Додати запит"},
     ]
-
     return (
         <div className="App">
             <Navbar crumbs={crumbs}></Navbar>

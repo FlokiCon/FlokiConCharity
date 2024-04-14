@@ -29,6 +29,7 @@ export const Login = () => {
         })
         .then(response => response.json())
         .then(data => {
+            ReactSession.set('access_token', data.access_token);
             console.log(data);
         })
         .catch(error => {
@@ -44,8 +45,8 @@ export const Login = () => {
             <form className="login-form" onSubmit={handleSubmit}>
                 <h2>Вхід</h2>
                 <div className="form-group">
-                    <label htmlFor="login">Логін:</label>
                     <input
+                        placeholder='Логін'
                         type="text"
                         name="login"
                         id="login"
@@ -55,8 +56,8 @@ export const Login = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Пароль:</label>
                     <input
+                        placeholder='Пароль'
                         type="password"
                         name="password"
                         id="password"

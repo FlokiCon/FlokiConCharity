@@ -37,10 +37,10 @@ export const Footer = () => {
                 </li>
             </ul>
             <ul className="menu">
-                <li className="menu__item"><a className="menu__link" href="#">Головна</a></li>
-                <li className="menu__item"><a className="menu__link" href="#">Стати волонтером</a></li>
-                <li className="menu__item"><a className="menu__link" href="#">Додати запит</a></li>
-                <li className="menu__item"><a className="menu__link" href="#">Профіль</a></li>
+                <li className="menu__item"><a className="menu__link" href="/">Головна</a></li>
+                <li className="menu__item"><a className="menu__link" href="/advert_list">Стати волонтером</a></li>
+                <li className="menu__item"><a className="menu__link" href="/add_advert">Додати запит</a></li>
+                <li className="menu__item"><a className="menu__link" href="/profile">Профіль</a></li>
             </ul>
             <p>&copy;2024 FlokiCon Charity. All Rights Reserved</p>
         </footer>

@@ -6,7 +6,7 @@ import { useState } from 'react';
 export const Advert = () => {
     let priorities = [];
     for (let i = 0; i < 5; ++i) {
-        priorities.push(<input key={i} className="form-check-input" type="radio" name="priority" value={i} onChange={e => setPriority(e.target.value)}></input>)
+        priorities.push(<><input key={i} className="form-check-input" type="radio" name="priority" value={i} onChange={e => setPriority(e.target.value)}></input>{i + 1}</>)
     }
 
     const [title, setTitle] = useState('');
