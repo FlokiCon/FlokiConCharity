@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { ReactSession } from 'react-client-session';
 import './register.css';
 
 export const Register = () => {
+    ReactSession.setStoreType("localStorage");
+
     const [formData, setFormData] = useState({
         username: '',
         surname: '',
@@ -41,13 +44,18 @@ export const Register = () => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            if (data.access_token) {
+                ReactSession.set('access_token', data.access_token);
+            }
         })
         .catch(error => {
             console.error('Error:', error);
         });
     };
 
+    if (ReactSession.get('access_token')) {
+        window.location.href = '/profile';
+    }
     return (
         <form className='reg_form' onSubmit={handleSubmit}>
             <h2>Register</h2>
