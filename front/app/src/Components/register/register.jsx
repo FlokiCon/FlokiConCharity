@@ -52,9 +52,6 @@ export const Register = () => {
         });
     };
 
-    if (ReactSession.get('access_token')) {
-        window.location.href = '/profile';
-    }
     return (
         <form className='reg_form' onSubmit={handleSubmit}>
             <h2>Зареєструватись</h2>

@@ -37,9 +37,6 @@ export const Login = () => {
         });
     };
 
-    if (ReactSession.get('access_token')) {
-        window.location.href = '/profile';
-    }
     return (
         <div className="login-container">
             <form className="login-form" onSubmit={handleSubmit}>
