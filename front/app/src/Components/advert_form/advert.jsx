@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './advert.css';
 import { useState } from 'react';
 
+
 export const Advert = () => {
     let priorities = [];
     for (let i = 0; i < 5; ++i) {
@@ -23,6 +24,12 @@ export const Advert = () => {
         formData.append('text', text);
         formData.append('category_id', category);
         formData.append('priority', priority);
+
+        if (title === '' || text === '' || priority === '') {
+            alert('Заповніть всі поля');
+            window.location.href = '/advert_list';
+        }
+
         if (picture.length > 0) {
             formData.append('photo', picture[0], picture[0].name);
         }
@@ -32,7 +39,8 @@ export const Advert = () => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            alert('Додано успішно');
+            window.location.href = '/advert_list';
         })
         .catch(error => {
             console.error('Error:', error);
@@ -80,7 +88,7 @@ export const Advert = () => {
                 </div>
 
                 <input onChange={e => setPicture([...picture, e.target.files[0]])} className="form-control" type="file" id="formFile"></input>
-                <button type="submit" className="btn btn-secondary submit">Secondary</button>
+                <button type="submit" className="btn btn-secondary submit">Додати</button>
             </form>
         </div>
     )

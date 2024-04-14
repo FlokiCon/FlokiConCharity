@@ -11,7 +11,7 @@ function Profile() {
     return (
         <div className="App">
             <Navbar crumbs={crumbs}></Navbar>
-            <UserProfile></UserProfile>
+            <UserProfile user={{surname: "John", name: "Doe", login: "jde", phone: "+380 XX XXX XX XX"}}></UserProfile>
         </div>
     );
 }

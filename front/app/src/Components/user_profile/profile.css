@@ -9,6 +9,17 @@
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
+
+  .wrapper {
+    min-height: 100vh;
+  }
+
+  .wrapper .card {
+    width: 80% !important;
+    margin: 0 auto;
+    margin-top: 5em;
+    /* max-width: 600px !important; */
+  }
   
   .profile-image {
     width: 100px;
