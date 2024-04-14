@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ReactSession } from 'react-client-session';
 import './login.css';
 
 export const Login = () => {
@@ -35,6 +36,9 @@ export const Login = () => {
         });
     };
 
+    if (ReactSession.get('access_token')) {
+        window.location.href = '/profile';
+    }
     return (
         <div className="login-container">
             <form className="login-form" onSubmit={handleSubmit}>
@@ -61,7 +65,7 @@ export const Login = () => {
                         required
                     />
                 </div>
-                <button type="submit" className="btn-login">Увійти</button>
+                <button type="submit" className="btn btn-secondary">Увійти</button>
             </form>
         </div>
     );

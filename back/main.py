@@ -1,15 +1,22 @@
 # -*- coding: utf-8 -*-
 #from crypt import methods
+from calendar import c
 from flask import Flask, jsonify, request, g, send_file, session, redirect, url_for
 import os
 import sqlite3
 import io
 import bcrypt
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecretkey'
 app.config["SESSION_COOKIE_SAMESITE"] = "None"
 app.config["SESSION_COOKIE_SECURE"] = True
+app.config["JWT_SECRET_KEY"] = "super-secret"
+jwt = JWTManager(app)
 
 def get_db_connection():
     if 'db_connection' not in g:
@@ -108,18 +115,18 @@ def login():
         try:
             with sqlite3.connect('database.db') as connection:
                 data = request.get_json()
-
                 cursor = connection.cursor()
-                cursor.execute('SELECT * FROM user WHERE login = (?)', (data.get('login')))
+                cursor.execute('SELECT id,password_hash FROM user WHERE login = (?)', (data.get('login'),))
                 user = cursor.fetchone()
-
+                print(user)
                 if not user:
                     return jsonify({'message': 'User with this login not found!'}), 404
 
-                stored_password_hash = user[5]
+                stored_password_hash = user[1]
 
                 if bcrypt.checkpw(data.get('password').encode('utf-8'), stored_password_hash):
-                    return jsonify({data.get('login')}), 200
+                    access_token = create_access_token(identity=user[0])
+                    return jsonify(access_token=access_token)
                 else:
                     return jsonify({'message': 'Bad password!'}), 401
                 
@@ -160,11 +167,11 @@ def register_user():
 
                     cursor.execute('SELECT id FROM user WHERE login = ?', (login,))
                     user_id = cursor.fetchone()[0]
-                    
-                    session['user_id'] = user_id
-                    session['login'] = login
 
-                    return jsonify({'message': "Success!", 'user_id': user_id}), 201
+                    # Create an access token for the registered user
+                    access_token = create_access_token(identity=user_id)
+
+                    return jsonify({'message': "Success!", 'user_id': user_id, 'access_token': access_token}), 201
             except Exception as e:
                 return jsonify({'message': f'Error: {e}'}), 500
         else:
@@ -173,12 +180,11 @@ def register_user():
         return jsonify({'message': "Doesn't support!"}), 405
 
 @app.route('/get_current_user_id', methods=['GET'])
+@jwt_required()
 def get_current_user_id():
-    if 'user_id' in session:
-        return jsonify({'user_id': session['user_id']}), 200
-    else:
-        return jsonify({'message': 'No user logged in!'}), 401
-
+    current_user = get_jwt_identity()
+    print(current_user)
+    return jsonify(logged_in_as=current_user), 200
 
 @app.route('/get_adverts/<id>', methods=['GET'])
 def get_advert_by_id(id):
@@ -211,22 +217,6 @@ def get_advert_by_id(id):
     except Exception as e:
         return jsonify({'message': f'Помилка: {e}'}), 500
 
-
-@app.route('/check_session', methods=['GET'])
-def check_session():
-    if 'user_id' in session and 'login' in session:
-        return jsonify({'user_id': session['user_id'], 'login': session['login']}), 200
-    else:
-        return jsonify({}), 404
-    
-@app.route('/logout', methods=['GET'])
-def logout():
-    if 'user_id' in session and 'login' in session:
-        session.clear()
-        return jsonify({'message': 'Session closed!'}), 200
-    else:
-        return jsonify({'message': 'No active session!'}), 401
-    
 @app.route('/get_adverts', methods=['GET'])
 def get_adverts():
     try:

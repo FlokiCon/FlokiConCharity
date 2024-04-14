@@ -7,6 +7,8 @@ import Profile from './Profile';
 import Login from './Login';
 import About from './About';
 import Page from './Page';
+import Register from './Register';
+
 import {Footer} from './Components/footer/footer';
 
 import reportWebVitals from './reportWebVitals';
@@ -20,6 +22,10 @@ import {
     {
       path: "/",
       element: <About />
+    },
+    {
+      path: "/register",
+      element: <Register />
     },
     {
       path: '/page',

@@ -1,19 +1,19 @@
 import { Navbar } from './Components/nav/navbar';
-import { Advert } from './Components/advert_form/advert';
+import { ReactSession }  from 'react-client-session';
+import { Register } from './Components/register/register';
 
 function App() {
     const crumbs = [
         {path: "/advert_list", name: "Стати волонтером"},
         {path: "/add_advert", name: "Додати запит"},
-    ];
+    ]
 
     return (
         <div className="App">
             <Navbar crumbs={crumbs}></Navbar>
-            <Advert></Advert>
+            <Register></Register>
         </div>
     );
 }
-
 
 export default App;

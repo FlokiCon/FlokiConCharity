@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Card } from './advert_card';
+import styles from './advert.module.css';
 
 export const Cards = ({page}) => {
 
@@ -16,8 +17,8 @@ export const Cards = ({page}) => {
         })
     }, [page])
 
-    if (advert.length <= 0) {
-        return null;
+    if (advert.length <= 0 || advert['adverts'].length <= 0) {
+        return <h1 className={styles.not_found}>Оголошень не знайдено :(</h1>;
     }
     return (
         <div className='cards'>
@@ -27,7 +28,7 @@ export const Cards = ({page}) => {
                 <div className="card-body">
                     <h5 className="card-title">{adv.title}</h5>
                     <p className="card-text">{adv.text.slice(0, 100) + (adv.text.length > 100 ? '...' : '')}</p>
-                    <a href={"/page?p="+adv.advert_id} className="btn btn-primary">Допомогти</a>
+                    <a href={"/page?p="+adv.advert_id} className="btn btn-secondary">Допомогти</a>
                 </div>
             </div>
             ))}

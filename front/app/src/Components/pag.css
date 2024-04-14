@@ -7,3 +7,13 @@
 .wrapper {
     min-height: 100vh;
 }
+
+.page-item a{
+    color: #313131 !important;
+}
+
+.page-item a:focus,
+.page-item a:active {
+    box-shadow:none !important;
+    outline:0px !important;
+}

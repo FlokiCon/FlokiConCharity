@@ -12,12 +12,15 @@ h1, h2 {
 
 .t2 {
   margin-top: 2.5em !important;
-  margin-bottom: 1em !important;
+  margin-bottom: 0.5em !important;
 }
 
 .t3 {
   margin-top: 2.5em !important;
-  margin-bottom: 0.5em !important;
+}
+
+.t4 {
+  margin-top: 1.25em;
 }
 
 .result-container {

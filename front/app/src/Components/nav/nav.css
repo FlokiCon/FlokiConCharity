@@ -98,3 +98,15 @@
     border: 2px solid #333; /* Змінити колір контуру профілю */
     padding: 3px;
 }
+
+@media screen and (max-width: 645px) {
+  .custom-navbar {
+    font-size: 1em;
+  }
+  .custom-navbar .logo {
+    display: none;
+  }
+  .custom-navbar .title {
+    display: none;
+  }
+}
