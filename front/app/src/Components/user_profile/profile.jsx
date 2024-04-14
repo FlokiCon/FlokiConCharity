@@ -6,9 +6,6 @@ export const UserProfile = ({user}) => {
   return (
     <div className='wrapper'>
     <div className="profile-container">
-      <div className="profile-image">
-        <img alt="Profile Picture" />
-      </div>
       <div className="user-info">
         <h2>{user.name} {user.surname}</h2>
         <p>Login: <span>{user.login}</span></p>
