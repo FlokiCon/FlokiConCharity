@@ -31,6 +31,8 @@ export const Login = () => {
         .then(data => {
             ReactSession.set('access_token', data.access_token);
             console.log(data);
+            alert('Logged in successfully');
+            window.location.href = '/';
         })
         .catch(error => {
             console.error('Error:', error);

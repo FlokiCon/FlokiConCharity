@@ -45,6 +45,8 @@ export const Register = () => {
             if (data.access_token) {
                 ReactSession.set('access_token', data.access_token);
                 console.log(data);
+                alert('Registered successfully');
+                window.location.href = '/';
             }
         })
         .catch(error => {
