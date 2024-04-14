@@ -64,8 +64,8 @@ export const Advert = () => {
 
     return (
         <div className='advert'>
-            <h1>Створити запит</h1>
             <form onSubmit={handleSubmit}>
+                <h1>Створити запит</h1>
                 <input value={title} onChange={(e) => setTitle(e.target.value)} name="title" type="text" className="form-control username-field title" id="floatingInput" placeholder="Назва"></input>
                 <textarea value = {text} onChange={e => setText(e.target.value)} className="form-control" placeholder="Запит" id="floatingTextarea"></textarea>
                 
