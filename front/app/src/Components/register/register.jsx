@@ -3,8 +3,6 @@ import { ReactSession } from 'react-client-session';
 import './register.css';
 
 export const Register = () => {
-    ReactSession.setStoreType("localStorage");
-
     const [formData, setFormData] = useState({
         username: '',
         surname: '',
