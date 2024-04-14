@@ -74,8 +74,6 @@ def init_db():
 
 @app.route('/add_advert', methods=['POST'])
 def add_advert():
-    session['user_id'] = '1'
-    session['login'] = 'q1'
     try:
         title = request.form.get('title')
         text = request.form.get('text')
@@ -108,32 +106,22 @@ def add_advert():
 def login():
     if request.method == "POST":
         try:
-            required_fields = ['login', 'password']
-            if all(field in request.form for field in required_fields):
-                login = request.form['login']
-                password = request.form['password']
+            with sqlite3.connect('database.db') as connection:
+                data = request.get_json()
 
-                if not login or not password:
-                    return jsonify({'message': 'no login or password!'}), 400
+                cursor = connection.cursor()
+                cursor.execute('SELECT * FROM user WHERE login = (?)', (data.get('login')))
+                user = cursor.fetchone()
 
-                with sqlite3.connect('database.db') as connection:
-                    cursor = connection.cursor()
-                    cursor.execute('SELECT * FROM user WHERE login = (?)', (login, ))
-                    user = cursor.fetchone()
+                if not user:
+                    return jsonify({'message': 'User with this login not found!'}), 404
 
-                    if not user:
-                        return jsonify({'message': 'User with this login not found!'}), 404
+                stored_password_hash = user[5]
 
-                    stored_password_hash = user[5]
-
-                    if bcrypt.checkpw(password.encode('utf-8'), stored_password_hash):
-                        session['user_id'] = user[0]
-                        session['login'] = user[4]
-                        return jsonify({'message': 'Success!'}), 200
-                    else:
-                        return jsonify({'message': 'Bad password!'}), 401
-            else:
-                return jsonify({'message': "Not enought fields!"}), 400
+                if bcrypt.checkpw(data.get('password').encode('utf-8'), stored_password_hash):
+                    return jsonify({data.get('login')}), 200
+                else:
+                    return jsonify({'message': 'Bad password!'}), 401
                 
         except Exception as e:
             return jsonify({'message': f'Error: {e}'}), 500
@@ -192,6 +180,38 @@ def get_current_user_id():
         return jsonify({'message': 'No user logged in!'}), 401
 
 
+@app.route('/get_adverts/<id>', methods=['GET'])
+def get_advert_by_id(id):
+    try:
+
+        with app.app_context():
+            conn = get_db_connection()
+            cursor = conn.cursor()
+
+            cursor.execute("""
+                SELECT advert_id, title, text, priority, photo, user_id, category_id
+                FROM advert WHERE advert_id = ?
+                """, (id))
+            adverts = cursor.fetchall()
+
+            formatted_adverts = []
+            for advert in adverts:
+                formatted_advert = {
+                    'advert_id': advert[0],
+                    'title': advert[1],
+                    'text': advert[2],
+                    'priority': advert[3],
+                    'photo_path': bool(advert[4]),
+                    'user_id': advert[5],
+                    'category_id': advert[6]
+                }
+                formatted_adverts.append(formatted_advert)
+
+            return jsonify(formatted_adverts), 200
+    except Exception as e:
+        return jsonify({'message': f'Помилка: {e}'}), 500
+
+
 @app.route('/check_session', methods=['GET'])
 def check_session():
     if 'user_id' in session and 'login' in session:
@@ -212,8 +232,8 @@ def get_adverts():
     try:
         page = request.args.get('page', default=1, type=int)
 
-        start_idx = (page - 1) * 20
-        end_idx = start_idx + 20
+        start_idx = (page - 1) * 15
+        end_idx = start_idx + 15
 
         with app.app_context():
             conn = get_db_connection()
