@@ -14,6 +14,7 @@ function Home() {
     return (
         <div className="App">
             <Navbar crumbs={crumbs}></Navbar>
+            <Cards crumbs={crumbs}></Cards>
         </div>
     );
 }

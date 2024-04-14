@@ -11,6 +11,7 @@ function App() {
     return (
         <div className="App">
             <Navbar crumbs={crumbs}></Navbar>
+            <Advert page={1}></Advert>
         </div>
     );
 }
