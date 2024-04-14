@@ -4,7 +4,6 @@ import { UserProfile } from './Components/user_profile/profile'
 
 function Profile() {
     const crumbs = [
-        {path: "/", name: "Головна"},
         {path: "/add_advert", name: "Додати запит"},
     ]
 

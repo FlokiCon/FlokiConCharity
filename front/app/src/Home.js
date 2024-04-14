@@ -8,15 +8,12 @@ function Home() {
     const endpoint = '/get';
 
     const crumbs = [
-        {path: "/", name: "Головна"},
         {path: "/add_advert", name: "Додати запит"},
     ]
 
     return (
         <div className="App">
             <Navbar crumbs={crumbs}></Navbar>
-            <Cards page={1}></Cards>
-            <Footer></Footer>
         </div>
     );
 }

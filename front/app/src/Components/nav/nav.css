@@ -17,6 +17,11 @@
   .logo {
     font-size: 1.5rem;
   }
+
+  .logo a {
+    text-decoration: none;
+    color: #333;
+  }
   
   .crumbs {
     display: flex; /* Use flexbox for horizontal alignment of crumbs */
@@ -53,11 +58,14 @@
     justify-content: space-between;
 }
 
-.crumbs a{
+.crumbs a:not(:last-child){
     padding-right: 2em;
-    text-decoration: none;
-    color: #333;
-    transition: color 0.2s;
+}
+
+.crumbs a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.2s;
 }
 
 .crumbs a:hover{

@@ -11,7 +11,7 @@ export const Navbar = ({crumbs}) => {
     return (
         <nav className="custom-navbar">
             <div className="divv">
-                <span className='logo'>FCC</span>
+                <span className='logo'><a href="/">FCC</a></span>
             </div>
             <div className="crumbs">
                 <div className="crumbs">{items}</div>
