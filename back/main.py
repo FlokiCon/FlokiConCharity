@@ -108,7 +108,6 @@ def login():
         try:
             with sqlite3.connect('database.db') as connection:
                 data = request.get_json()
-                print(data)
                 cursor = connection.cursor()
                 cursor.execute('SELECT * FROM user WHERE login = (?)', (data.get('login'),))
                 user = cursor.fetchone()
