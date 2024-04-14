@@ -1,6 +1,6 @@
 import { Navbar } from './Components/nav/navbar';
 import { ReactSession }  from 'react-client-session';
-import { Register } from './Components/registation_form/register';
+import { Register } from './Components/register/register';
 
 function App() {
     const crumbs = [
