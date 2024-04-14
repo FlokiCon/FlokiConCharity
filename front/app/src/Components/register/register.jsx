@@ -3,8 +3,12 @@ import './register.css';
 
 export const Register = () => {
     const [formData, setFormData] = useState({
-        login: '',
-        password: ''
+        username: '',
+        surname: '',
+        password: '',
+        confirm_password: '',
+        phone: '',
+        gmail: ''
     });
 
     const handleChange = (e) => {
@@ -19,6 +23,15 @@ export const Register = () => {
         e.preventDefault();
         console.log(formData);
         
+        if (formData.password !== formData.confirm_password) {
+            alert('Passwords do not match');
+            return;
+        }
+        else if (formData.password.length < 8) {
+            alert('Password must be at least 8 characters long');
+            return;
+        }
+
         fetch('/login', {
             method: 'POST',
             headers: {
@@ -36,51 +49,27 @@ export const Register = () => {
     };
 
     return (
-        <div className="login-container">
-            <form>
-  <div class="col-md-6">
-    <label for="inputEmail4" class="form-label">Email</label>
-    <input type="email" class="form-control" id="inputEmail4"></input>
-  </div>
-  <div class="col-md-6">
-    <label for="inputPassword4" class="form-label">Password</label>
-    <input type="password" class="form-control" id="inputPassword4"></input>
-  </div>
-  <div class="col-12">
-    <label for="inputAddress" class="form-label">Address</label>
-    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St"></input>
-  </div>
-  <div class="col-12">
-    <label for="inputAddress2" class="form-label">Address 2</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor"></input>
-  </div>
-  <div class="col-md-6">
-    <label for="inputCity" class="form-label">City</label>
-    <input type="text" class="form-control" id="inputCity"></input>
-  </div>
-  <div class="col-md-4">
-    <label for="inputState" class="form-label">State</label>
-    <select id="inputState" class="form-select">
-      <option selected>Choose...</option>
-      <option>...</option>
-    </select>
-  </div>
-  <div class="col-md-2">
-    <label for="inputZip" class="form-label">Zip</label>
-    <input type="text" class="form-control" id="inputZip"></input>
-  </div>
-  <div class="col-12">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck"></input>
-      <label class="form-check-label" for="gridCheck">
-        Check me out
-      </label>
-    </div>
-  </div>
-  <div class="col-12">
-    <button type="submit" class="btn btn-primary">Sign in</button>
-  </div>
-    </form>
-    </div>
+        <form className='reg_form' onSubmit={handleSubmit}>
+            <h2>Register</h2>
+            <div class="input-group">
+                <input value={formData.username} onChange={handleChange} placeholder='username' type="text" id="username" name="username" required></input>
+            </div>
+            <div class="input-group">
+                <input value={formData.surname} onChange={handleChange} placeholder='surname' type="text" id="surname" name="surname" required></input>
+            </div>
+            <div class="input-group">
+                <input value={formData.password} onChange={handleChange} placeholder='password' type="password" id="password" name="password" required></input>
+            </div>
+            <div class="input-group">
+                <input value={formData.confirm_password} onChange={handleChange} placeholder="confirm password" type="password" id="confirm_password" name="confirm_password" required></input>
+            </div>
+            <div class="input-group">
+                <input value={formData.phone} onChange={handleChange} placeholder="phone number" type="tel" id="phone" name="phone" required></input>
+            </div>
+            <div class="input-group">
+                <input value={formData.gmail} onChange={handleChange} placeholder='email' type="email" id="gmail" name="gmail" required></input>
+            </div>
+            <button type="submit" className='btn btn-secondary'>Submit</button>
+        </form>
     );
 };

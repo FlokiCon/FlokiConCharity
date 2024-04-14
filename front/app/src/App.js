@@ -1,4 +1,3 @@
-import { Reg } from './Components/registation_form/register';
 import { Navbar } from './Components/nav/navbar';
 import { Advert } from './Components/advert_form/advert';
 
