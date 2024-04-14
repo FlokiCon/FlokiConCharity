@@ -14,7 +14,7 @@ export const Cards = ({page}) => {
                 setAdvert(data);
                 console.log(data);
         })
-    }, [])
+    }, [page])
 
     if (advert.length <= 0) {
         return null;
@@ -22,7 +22,14 @@ export const Cards = ({page}) => {
     return (
         <div className='cards'>
             {advert['adverts'].map((adv, index) => (
-                <Card key={index} adv={adv}></Card>
+                <div className="card" key={index}>
+                <img src={"/get_photo/" + adv.advert_id} className="card-img-top" alt="advert image" />
+                <div className="card-body">
+                    <h5 className="card-title">{adv.title}</h5>
+                    <p className="card-text">{adv.text.slice(0, 100) + (adv.text.length > 100 ? '...' : '')}</p>
+                    <a href="#" className="btn btn-primary">Допомогти</a>
+                </div>
+            </div>
             ))}
         </div>
     )

@@ -5,6 +5,7 @@ import App from './App';
 import Home from './Home';
 import Profile from './Profile';
 import Login from './Login';
+import {Footer} from './Components/footer/footer';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -15,7 +16,7 @@ import {
 
   const router = createBrowserRouter([
     {
-        path: "/",
+        path: "/advert_list",
         element: <Home />
     },
     {
@@ -35,6 +36,9 @@ import {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+    <>
     <RouterProvider router={router} />
+    <Footer></Footer>
+    </>
 );
 reportWebVitals();

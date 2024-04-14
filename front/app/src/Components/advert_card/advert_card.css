@@ -1,3 +1,13 @@
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: 0 auto;
+    justify-content: space-around;
+    min-height: 100vh;
+}
+
 .card {
-    width: 18em !important;
+    width: calc(80% * (1/3)) !important;
+    margin-top: 1.5em;
 }
