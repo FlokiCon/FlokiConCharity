@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import Home from './Home';
 import Profile from './Profile';
+import Login from './Login';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -24,6 +25,10 @@ import {
     {
       path: "/profile",
       element: <Profile />
+    },
+    {
+      path: "/login",
+      element: <Login />
     }
 
   ]);
