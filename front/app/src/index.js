@@ -5,6 +5,7 @@ import App from './App';
 import Home from './Home';
 import Profile from './Profile';
 import Login from './Login';
+import About from './About';
 import {Footer} from './Components/footer/footer';
 
 import reportWebVitals from './reportWebVitals';
@@ -15,6 +16,10 @@ import {
   } from "react-router-dom";
 
   const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <About />
+    },
     {
         path: "/advert_list",
         element: <Home />
