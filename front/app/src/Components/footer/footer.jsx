@@ -19,9 +19,9 @@ export const Footer = () => {
                 <div className="footer-section links">
                     <h2>Швидкі посилання</h2>
                     <ul>
-                        <a href="#"><li>Головна</li></a>
-                        <a href="#"><li>Оголошення</li></a>
-                        <a href="#"><li>Контакти</li></a>
+                        <a href="/"><li>Головна</li></a>
+                        <a href="/advert_list"><li>Оголошення</li></a>
+                        <a href="/add_advert"><li>Додати запит</li></a>
                     </ul>
                 </div>
             </div>

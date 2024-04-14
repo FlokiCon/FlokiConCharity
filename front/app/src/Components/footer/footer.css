@@ -3,20 +3,20 @@ footer {
     background-color: #333;
     color: #fff;
     padding: 30px 0;
-    text-align: center; /* Вирівнюємо текст по центру */
+    text-align: center; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ */
 }
 
 .footer-content {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between; /* Центруємо блоки по горизонталі */
+    justify-content: space-between; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
     gap: 20px;
 }
 
 .footer-section {
     flex: 1;
-    text-align: right; /* Вирівнюємо текст в блоках по правому краю */
-    margin-right: 40px; /* Відступ від правого краю */
+    text-align: right; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ */
+    margin-right: 40px; /* ВіпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ */
 }
 
     .footer-section h2 {
@@ -32,19 +32,19 @@ footer {
         .footer-section ul li {
             margin-bottom: 10px;
             font-size: 14px;
-            color: #fff; /* Колір тексту */
-            text-decoration: underline; /* Підкреслення тексту */
+            color: #fff; /* пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ */
+            text-decoration: underline; /* ПіпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ */
         }
 
 .footer-bottom {
     text-align: center;
     padding-top: 10px;
     border-top: 1px solid #777;
-    margin-top: 20px;
     font-size: 12px;
+    margin-bottom: -1.5em;
 }
 
 .footer-section.about {
-    text-align: left; /* Вирівнюємо текст в блоку about по лівому краю */
-    margin-left: 40px; /* Додаємо відступ від лівого краю */
+    text-align: left; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ about пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ */
+    margin-left: 40px; /* пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ */
 }
