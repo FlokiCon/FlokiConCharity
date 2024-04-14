@@ -138,44 +138,42 @@ def login():
 @app.route("/register", methods=["POST", 'GET'])
 def register_user():
     if request.method == "POST":
+        data = request.get_json()
         required_fields = ['name', 'surname', 'login', 'password', 'password_config', 'phone']
-        if all(field in request.form for field in required_fields):
-            name = request.form['name']
-            surname = request.form['surname']
-            login = request.form['login']
-            password = request.form['password']
-            password_config = request.form['password_config']
-            phone = request.form['phone']
+        name = data.get('name')
+        surname = data.get('surname')
+        login = data.get('login')
+        password = data.get('password')
+        password_config = data.get('password_config')
+        phone = data.get('phone')
 
-            if password != password_config:
-                return jsonify({'message': "Passwords doesn't match!"}), 400
+        if password != password_config:
+            return jsonify({'message': "Passwords doesn't match!"}), 400
 
-            try:
-                with sqlite3.connect('database.db') as connection:
-                    cursor = connection.cursor()
-                    cursor.execute('SELECT * FROM user WHERE login = ?', (login,))
-                    account = cursor.fetchone()
+        try:
+            with sqlite3.connect('database.db') as connection:
+                cursor = connection.cursor()
+                cursor.execute('SELECT * FROM user WHERE login = ?', (login,))
+                account = cursor.fetchone()
 
-                    if account:
-                        return jsonify({'message': "User already exists!"}), 409
+                if account:
+                    return jsonify({'message': "User already exists!"}), 409
 
-                    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-                    cursor.execute("""
-                        INSERT INTO user (name, surname, phone, login, password_hash) VALUES (?, ?, ?, ?, ?)
-                    """, (name, surname, phone, login, hashed_password))
-                    connection.commit()
+                hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+                cursor.execute("""
+                    INSERT INTO user (name, surname, phone, login, password_hash) VALUES (?, ?, ?, ?, ?)
+                """, (name, surname, phone, login, hashed_password))
+                connection.commit()
 
-                    cursor.execute('SELECT id FROM user WHERE login = ?', (login,))
-                    user_id = cursor.fetchone()[0]
+                cursor.execute('SELECT id FROM user WHERE login = ?', (login,))
+                user_id = cursor.fetchone()[0]
 
-                    # Create an access token for the registered user
-                    access_token = create_access_token(identity=user_id)
+                # Create an access token for the registered user
+                access_token = create_access_token(identity=user_id)
 
-                    return jsonify({'message': "Success!", 'user_id': user_id, 'access_token': access_token}), 201
-            except Exception as e:
-                return jsonify({'message': f'Error: {e}'}), 500
-        else:
-            return jsonify({'message': "Not enough fields!"}), 400
+                return jsonify({'message': "Success!", 'user_id': user_id, 'access_token': access_token}), 201
+        except Exception as e:
+            return jsonify({'message': f'Error: {e}'}), 500
     else:
         return jsonify({'message': "Doesn't support!"}), 405
 

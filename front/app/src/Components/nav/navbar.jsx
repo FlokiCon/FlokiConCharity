@@ -1,5 +1,6 @@
 import React from 'react';
 import './nav.css'
+import { ReactSession } from 'react-client-session';
 
 export const Navbar = ({crumbs}) => {
 
@@ -7,6 +8,8 @@ export const Navbar = ({crumbs}) => {
     for (let i = 0; i < crumbs.length; ++i) {
         items.push(<a href={crumbs[i].path} key={i}><span>{crumbs[i].name}</span></a>)
     }
+
+    console.log(ReactSession.get('access_token'));
 
     return (
         <nav className="custom-navbar">

@@ -4,12 +4,12 @@ import './register.css';
 
 export const Register = () => {
     const [formData, setFormData] = useState({
-        username: '',
+        name: '',
         surname: '',
+        login: '',
         password: '',
-        confirm_password: '',
+        password_config: '',
         phone: '',
-        gmail: ''
     });
 
     const handleChange = (e) => {
@@ -24,16 +24,16 @@ export const Register = () => {
         e.preventDefault();
         console.log(formData);
         
-        if (formData.password !== formData.confirm_password) {
-            alert('Passwords do not match');
-            return;
-        }
-        else if (formData.password.length < 8) {
-            alert('Password must be at least 8 characters long');
-            return;
-        }
+        // if (formData.password !== formData.password_config) {
+        //     alert('Passwords do not match');
+        //     return;
+        // }
+        // else if (formData.password.length < 8) {
+        //     alert('Password must be at least 8 characters long');
+        //     return;
+        // }
 
-        fetch('/login', {
+        fetch('/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,7 +43,8 @@ export const Register = () => {
         .then(response => response.json())
         .then(data => {
             if (data.access_token) {
-                ReactSession.set('access_token', data.access_token);
+                // ReactSession.set('access_token', data.access_token);
+                console.log(data);
             }
         })
         .catch(error => {
@@ -57,23 +58,23 @@ export const Register = () => {
     return (
         <form className='reg_form' onSubmit={handleSubmit}>
             <h2>Register</h2>
-            <div class="input-group">
-                <input value={formData.username} onChange={handleChange} placeholder='username' type="text" id="username" name="username" required></input>
+            <div className="input-group">
+                <input value={formData.name} onChange={handleChange} placeholder='name' type="text" id="username" name="name" required></input>
             </div>
-            <div class="input-group">
+            <div className="input-group">
                 <input value={formData.surname} onChange={handleChange} placeholder='surname' type="text" id="surname" name="surname" required></input>
             </div>
-            <div class="input-group">
+            <div className="input-group">
+                <input value={formData.login} onChange={handleChange} placeholder='login' type="text" id="login" name="login" required></input>
+            </div>
+            <div className="input-group">
                 <input value={formData.password} onChange={handleChange} placeholder='password' type="password" id="password" name="password" required></input>
             </div>
-            <div class="input-group">
-                <input value={formData.confirm_password} onChange={handleChange} placeholder="confirm password" type="password" id="confirm_password" name="confirm_password" required></input>
+            <div className="input-group">
+                <input value={formData.password_config} onChange={handleChange} placeholder="confirm password" type="password" id="confirm_password" name="password_config" required></input>
             </div>
-            <div class="input-group">
+            <div className="input-group">
                 <input value={formData.phone} onChange={handleChange} placeholder="phone number" type="tel" id="phone" name="phone" required></input>
-            </div>
-            <div class="input-group">
-                <input value={formData.gmail} onChange={handleChange} placeholder='email' type="email" id="gmail" name="gmail" required></input>
             </div>
             <button type="submit" className='btn btn-secondary'>Submit</button>
         </form>
