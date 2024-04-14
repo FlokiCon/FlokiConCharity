@@ -1,33 +1,48 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './footer.css';
-import { useState } from 'react';
 
 export const Footer = () => {
     return (
-        <footer>
-            <div className="footer-content">
-                <div className="footer-section about">
-                    <h1 className="logo-text">FlokiCon Charity</h1>
-                    <p>
-                        Платформа для надання допомоги постраждалим у війні.
-                    </p>
-                    <div className="contact">
-                        <span><i className="fas fa-phone"></i> +380 XX XXX XX XX</span>
-                        <span><i className="fas fa-envelope"></i> contact@flokoncharity.com</span>
-                    </div>
-                </div>
-                <div className="footer-section links">
-                    <h2>Швидкі посилання</h2>
-                    <ul>
-                        <a href="/"><li>Головна</li></a>
-                        <a href="/advert_list"><li>Оголошення</li></a>
-                        <a href="/add_advert"><li>Додати запит</li></a>
-                    </ul>
-                </div>
+        <footer className="footer">
+            <div className="waves">
+                <div className="wave" id="wave1"></div>
+                <div className="wave" id="wave2"></div>
+                <div className="wave" id="wave3"></div>
+                <div className="wave" id="wave4"></div>
             </div>
-            <div className="footer-bottom">
-                &copy; 2024 FlokiCon Charity. Всі права захищені.
-            </div>
+            <ul className="social-icon">
+                {/* Facebook */}
+                <li className="social-icon__item">
+                    <a className="social-icon__link" href="https://www.facebook.com/example" target="_blank" rel="noopener noreferrer">
+                        <img style={{ width: '30px', height: '30px', marginRight: '20px'}} src="Facebook_f_logo_(2019).svg" alt="Facebook" />
+                    </a>
+                </li>
+                {/* Twitter */}
+                <li className="social-icon__item">
+                    <a className="social-icon__link" href="https://twitter.com/example" target="_blank" rel="noopener noreferrer">
+                        <img style={{ width: '40px', height: '30px', marginRight: '20px', color: 'white' }} src="Logo_of_Twitter.svg.png" alt="Twitter" />
+                    </a>
+                </li>
+                {/* LinkedIn */}
+                <li className="social-icon__item">
+                    <a className="social-icon__link" href="https://www.linkedin.com/company/example" target="_blank" rel="noopener noreferrer">
+                        <img style={{ width: '30px', height: '30px', marginRight: '20px', color: 'white' }} src="in.jpg" alt="LinkedIn" />
+                    </a>
+                </li>
+                {/* Instagram */}
+                <li className="social-icon__item">
+                    <a className="social-icon__link" href="https://www.instagram.com/example" target="_blank" rel="noopener noreferrer">
+                        <img style={{ width: '30px', height: '30px', marginRight: '20px', color: 'white' }} src="inst.png" alt="Instagram" />
+                    </a>
+                </li>
+            </ul>
+            <ul className="menu">
+                <li className="menu__item"><a className="menu__link" href="#">Головна</a></li>
+                <li className="menu__item"><a className="menu__link" href="#">Стати волонтером</a></li>
+                <li className="menu__item"><a className="menu__link" href="#">Додати запит</a></li>
+                <li className="menu__item"><a className="menu__link" href="#">Профіль</a></li>
+            </ul>
+            <p>&copy;2024 FlokiCon Charity. All Rights Reserved</p>
         </footer>
-    )
+    );
 }
