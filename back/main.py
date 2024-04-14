@@ -295,57 +295,6 @@ def get_user_adverts(user_id):
     except Exception as e:
         return jsonify({'message': f'Помилка: {e}'}), 500
 
-@app.route('/get_advert_info/<int:advert_id>', methods=['GET'])
-def get_advert_info(advert_id):
-    try:
-        with sqlite3.connect('database.db') as connection:
-            cursor = connection.cursor()
-            
-
-            cursor.execute("""
-                SELECT advert_id, title, text, priority, photo, user_id, category_id
-                FROM advert
-                WHERE advert_id = ?
-                """, (advert_id,))
-            
-            advert = cursor.fetchone()
-
-            if not advert:
-                return jsonify({'message': 'Advert not found!'}), 404
-
-            advert_info = {
-                'advert_id': advert[0],
-                'title': advert[1],
-                'text': advert[2],
-                'priority': advert[3],
-                'photo_path': bool(advert[4]),
-                'user_id': advert[5],
-                'category_id': advert[6]
-            }
-
-            cursor.execute("""
-                SELECT id, name, surname, phone, login
-                FROM user
-                WHERE id = ?
-                """, (advert[5],)) 
-
-            user = cursor.fetchone()
-
-            if user:
-                user_info = {
-                    'user_id': user[0],
-                    'name': user[1],
-                    'surname': user[2],
-                    'phone': user[3],
-                    'login': user[4]
-                }
-                advert_info['user_info'] = user_info
-
-            return jsonify({'advert_info': advert_info}), 200
-
-    except Exception as e:
-        return jsonify({'message': f'Error: {e}'}), 500
-
 @app.route('/get_photo/<int:advert_id>', methods=['GET'])
 def get_photo(advert_id):
     try:
@@ -407,7 +356,7 @@ def get_user(user_id):
                 return jsonify({'message': 'Користувач не знайдений!'}), 404
     except Exception as e:
         return jsonify({'message': f'Помилка: {e}'}), 500
-    
+
 if __name__ == "__main__":
     init_db()
     port = int(os.environ.get('PORT', 5000))

@@ -6,6 +6,7 @@ import Home from './Home';
 import Profile from './Profile';
 import Login from './Login';
 import About from './About';
+import Page from './Page';
 import {Footer} from './Components/footer/footer';
 
 import reportWebVitals from './reportWebVitals';
@@ -19,6 +20,10 @@ import {
     {
       path: "/",
       element: <About />
+    },
+    {
+      path: '/page',
+      element: <Page />
     },
     {
         path: "/advert_list",

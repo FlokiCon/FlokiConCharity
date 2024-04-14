@@ -18,7 +18,7 @@ function Home() {
             <Cards page={currentPage}></Cards>
             <nav aria-label="Page navigation example" className='pagin'>
                 <ul className="pagination">
-                    <li className="page-item"><a className="page-link" onClick={() => setCurrentPage(currentPage - 1)} href="#">Previous</a></li>
+                    <li className="page-item"><a className="page-link" onClick={() => {if (currentPage - 1 >= 1) {setCurrentPage(currentPage - 1)}}} href="#">Previous</a></li>
                     <li className="page-item"><a className="page-link" onClick={() => setCurrentPage(currentPage + 1)} href="#">Next</a></li>
                 </ul>
             </nav>

@@ -19,7 +19,7 @@ export const Navbar = ({crumbs}) => {
             </div>
             <div className="profile">
                 <span className='title'>FlokiCon Charity</span>
-                <span className='profile'><img src="/icons/user.png" alt="user icon" className="userico"></img></span>
+                <a href="/profile"><span className='profile'><img src="/icons/user.png" alt="user icon" className="userico"></img></span></a>
             </div>
         </nav>
     )

@@ -9,7 +9,7 @@ export const About = () => {
 
     return (
         <div className="container">
-            <h1 className="mt-5 mb-4">Про Нас</h1>
+            <h1 className="mt-5 mb-4 t1">Про Нас</h1>
             <div className="row">
                 <div className="col-md-6">
                     <h2>Наші цілі</h2>
@@ -21,7 +21,7 @@ export const About = () => {
                     <img src="/Kharkiv.jpg.jpg" alt="Ілюстрація" style={{ maxWidth: '100%', height: 'auto', borderRadius: '10px' }} />
                 </div>
             </div>
-            <h2 className="mt-5">Результати роботи фонду</h2>
+            <h2 className="mt-5 t2">Результати роботи фонду</h2>
             <hr />
             <div className="result-container">
                 <div className="result-item">
@@ -34,7 +34,7 @@ export const About = () => {
                 </div>
             </div>
             <hr />
-            <h2 className="mt-5">Історії</h2>
+            <h2 className="mt-5 t3">Історії</h2>
             <img src="/Flag_of_Ukraine.svg.png" alt="Ілюстрація" style={{ height:'5px', width:'1200px' }} />
             <div className="row">
                 <div className="col-md-4 mb-3">
