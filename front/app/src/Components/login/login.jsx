@@ -61,7 +61,7 @@ export const Login = () => {
                         required
                     />
                 </div>
-                <button type="submit" className="btn-login">Увійти</button>
+                <button type="submit" className="btn btn-secondary">Увійти</button>
             </form>
         </div>
     );
