@@ -24,14 +24,14 @@ export const Register = () => {
         e.preventDefault();
         console.log(formData);
         
-        // if (formData.password !== formData.password_config) {
-        //     alert('Passwords do not match');
-        //     return;
-        // }
-        // else if (formData.password.length < 8) {
-        //     alert('Password must be at least 8 characters long');
-        //     return;
-        // }
+        if (formData.password !== formData.password_config) {
+            alert('Passwords do not match');
+            return;
+        }
+        else if (formData.password.length < 8) {
+            alert('Password must be at least 8 characters long');
+            return;
+        }
 
         fetch('/register', {
             method: 'POST',
@@ -43,7 +43,7 @@ export const Register = () => {
         .then(response => response.json())
         .then(data => {
             if (data.access_token) {
-                // ReactSession.set('access_token', data.access_token);
+                ReactSession.set('access_token', data.access_token);
                 console.log(data);
             }
         })
